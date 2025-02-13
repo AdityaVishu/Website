@@ -8,7 +8,6 @@
         body {
             font-family: 'Roboto', sans-serif;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -73,6 +72,7 @@
         }
 
         /* Media Queries for Responsive Design */
+
         @media (orientation: landscape) {
             body {
                 flex-direction: row;
@@ -153,7 +153,11 @@
             const minutes = document.getElementById('minutes').value;
             clearInterval(timer);
             isRunning = false;
-            timeLeft = minutes * 60 || 1500;
+            if (minutes && !isNaN(minutes) && minutes >= 0) {
+                timeLeft = minutes * 60;
+            } else {
+                timeLeft = 1500;
+            }
             updateTimeDisplay();
         }
 
