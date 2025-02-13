@@ -1,194 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <link rel="shortcut icon" href="/img/images-removebg-preview.png" type="small-icon">
-  <link rel="icon" href="/img/images-removebg-preview.png" type="small-icon">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Vishu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            margin: 0;
+        }
+        .timer {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        .timer:hover {
+            transform: scale(1.05);
+        }
+        .time {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+        .buttons button, .set-timer button {
+            font-size: 18px;
+            padding: 12px 25px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: #0e0e0e;
+            transition: background-color 0.3s;
+        }
+        .buttons button:nth-child(1) {
+            background-color: transparent;
+            border: #0e0e0e solid 2px;
+            border-radius: 50px;
+        }
+        .buttons button:nth-child(1):hover {
+            background-color: #69d5dd;
+            border: #69d5dd solid 2px;
+        }
+        .buttons button:nth-child(2) {
+            background-color: transparent;
+            border: #0e0e0e solid 2px;
+            border-radius: 50px;
+
+        }
+        .buttons button:nth-child(2):hover {
+            background-color: #69d5dd;
+            border: #69d5dd solid 2px;
+        }
+        .buttons button:nth-child(3) {
+            background-color: transparent;
+            border: #0e0e0e solid 2px;
+            border-radius: 50px;
+        }
+        .buttons button:nth-child(3):hover {
+            background-color: #69d5dd;
+            border: #69d5dd solid 2px;
+        }
+        .set-timer {
+            margin-top: 20px;
+        }
+        .set-timer input {
+            font-size: 16px;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .set-timer button {
+            background-color: #000000;
+            color: white;
+        }
+        .set-timer button:hover {
+            background-color: #69d5dd;
+        }
+    </style>
 </head>
-
 <body>
-  <!-- Header -->
-  <section id="header">
-    <div class="header container">
-      <div class="nav-bar">
-        <div class="brand">
-          <a href="#hero">
-            <h1><span>V</span>ishu's <span>P</span>ortfolio</h1>
-          </a>
+    <div class="timer">
+        <div class="time" id="time">25:00</div>
+        <div class="buttons">
+            <button onclick="startTimer()">Start</button>
+            <button onclick="stopTimer()">Stop</button>
+            <button onclick="resetTimer()">Reset</button>
         </div>
-        <div class="nav-list">
-          <div class="hamburger">
-            <div class="bar"></div>
-          </div>
-          <ul>
-            <li><a href="#hero" data-after="Home">Home</a></li>
-            <li><a href="#projects" data-after="Projects">Projects</a></li>
-            <li><a href="#about" data-after="About">About</a></li>
-            <li><a href="#contact" data-after="Contact">Contact</a></li>
-          </ul>
+        <div class="set-timer">
+            <input type="number" id="minutes" placeholder="Minutes" min="0">
+            <button onclick="setTimer()">Set Timer</button>
         </div>
-      </div>
     </div>
-  </section>
-  <!-- End Header -->
 
+    <script>
+        let timer, isRunning = false, timeLeft = 1500;
 
-  <!-- Hero Section  -->
-  <section id="hero">
-    <div class="hero container">
-      <div>
-        <h1>Welcome To, <span></span></h1>
-        <h1>Vishu's Website <span></span></h1>
-        <!-- <a href="https://owonodes.com/" type="button" target="_blank" class="cta">Hosting</a> -->
-      </div>
-    </div>
-  </section>
-  <!-- End Hero Section  -->
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timer = setInterval(() => {
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        alert("Time's up!");
+                        resetTimer();
+                    } else {
+                        timeLeft--;
+                        updateTimeDisplay();
+                    }
+                }, 1000);
+            }
+        }
 
-  <!-- Projects Section -->
-  <section id="projects">
-    <div class="projects container">
-      <div class="projects-header">
-        <h1 class="section-title">Recent <span>Projects</span></h1>
-      </div>
-      <div class="all-projects">
-        <div class="project-item">
-          <div class="project-info">
-            <h1>Almightys</h1>
-            <h2>Minecraft Server</h2>
-            <p>A Cracked Minecraft Server in which Pocket Edition and Java Edition can play together and
-              have fun also it is India's Biggest Minecraft Server with many big youtubers and streamers 24/7 online.
-              Almighty at present offer servers being Survival, Skyblock, Bedwars, Skywars, Mini games , Monthly events and lot more coming soon !
-            </p>
-          </div>
-          <div class="project-img">
-            <img src="./img/amty_minecraft.png" alt="img">
-          </div>
-        </div>
-        <div class="project-item">
-          <div class="project-info">
-            <h1>Rawknee SMP</h1>
-            <h2>Minecraft Server</h2>
-            <p>RAWKNEE SMP is the Official Minecraft Network Server of The RawKnee Games. 
-            The server features Survival and other game modes like BedWars, Build Battle, Hunger Games, Skyblock and more !</p>
-          </div>
-          <div class="project-img">
-            <img src="./img/rawkneesmplogo.png" alt="img">
-          </div>
-        </div>
-        <div class="project-item">
-          <div class="project-info">
-            <h1>Bolt Music</h1>
-            <h2>Discord Bot</h2>
-            <p>A Music Bot made to fullfill your all needs ! Live your life with Music 🎶 !!
-               Comes with features like Chess Together and Youtube Together !!</p>
-          </div>
-          <div class="project-img">
-            <img src="./img/logo.PNG" alt="img">
-          </div>
-        </div>
-        <div class="project-item">
-          <div class="project-info">
-            <h1>OwONodes</h1>
-            <h2>Hosting Service</h2>
-            <p>OwONodes also know as one of the best hosting provider in India. Which offer us hosting like Web hosting , Minecraft hosting , Vps Hosting etc.. In 
-              Cheap Prices then other hosting ! 
-            </p>
-          </div>
-          <div class="project-img">
-            <img src="./img/62dc17da8afbca1774cca2e840a227d1.png" alt="img">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- End Projects Section -->
+        function stopTimer() {
+            clearInterval(timer);
+            isRunning = false;
+        }
 
-  <!-- About Section -->
-  <section id="about">
-    <div class="about container">
-      <div class="col-left">
-        <div class="about-img">
-          <img src="./img/a_3f41fc88ab7e10fb4638c7eb1aa0bce3.gif" alt="img">
-        </div>
-      </div>
-      <div class="col-right">
-        <h1 class="section-title">About <span>me</span></h1>
-        <h2>Developer</h2>
-        <p><b>I am a Minecraft and discord bot developer , I like to code and play games like Minecraft ,<br> GTA V , Valorant etc...
-          I am Minecraft Dev From past 3 Years And Founder of OwONodes . I have worked in many Minecraft server still now .
-        </p>
-        <a href="#projects" class="cta">Projects</a>
-      </div>
-    </div>
-  </section>
-  <!-- End About Section -->
+        function resetTimer() {
+            const minutes = document.getElementById('minutes').value;
+            clearInterval(timer);
+            isRunning = false;
+            timeLeft = minutes * 60 || 1500;
+            updateTimeDisplay();
+        }
 
-  <!-- Contact Section -->
-  <section id="contact">
-    <div class="contact container">
-      <div>
-        <h1 class="section-title">Contact <span>info</span></h1>
-      </div>
-      <div class="contact-items">
-        <div class="contact-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/phone.png" /></div>
-          <div class="contact-info">
-            <h1>Discord</h1>
-            <h2>Vishu#9999</h2>
-           <!-- <h2>+1 234 123 1234</h2>  -->
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/new-post.png" /></div>
-          <div class="contact-info">
-            <h1>Email</h1>
-            <h2>info@vishu.in.net</h2>
-            <!-- <h2>aditya@vishu.me</h2> -->
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/map-marker.png" /></div>
-          <div class="contact-info">
-            <h1>Twitter</h1>
-            <h2>aditya_vishu_</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- End Contact Section -->
+        function setTimer() {
+            const minutes = document.getElementById('minutes').value;
+            if (minutes >= 0) {
+                timeLeft = minutes * 60;
+                updateTimeDisplay();
+            }
+        }
 
-  <!-- Footer -->
-  <section id="footer">
-    <div class="footer container">
-      <div class="brand">
-        <h1><span>V</span>ishu <span>P</span>ortfolio<h1>
-      </div>
-      <h2>Innovating one project at a time</h2>
-      <div class="social-icon">
-        <div class="social-item">
-          <a href="https://www.facebook.com/aditya.jaiswal.37604" target="_blank"><img src="https://img.icons8.com/bubbles/100/000000/facebook-new.png" /></a>
-        </div>
-        <div class="social-item">
-          <a href="https://www.instagram.com/aditya_vishu_/" target="_blank"><img src="https://img.icons8.com/bubbles/100/000000/instagram-new.png" /></a>
-        </div>
-        <div class="social-item">
-          <a href="https://twitter.com/aditya_vishu_" target="_blank"><img src="https://img.icons8.com/bubbles/344/twitter-circled.png" /></a>
-        </div>
-        <!-- <div class="social-item">
-          <a href="#"><img src="https://img.icons8.com/bubbles/100/000000/behance.png" /></a>
-        </div> -->
-      </div>
-      <!-- <p>Copyright © 2020 Vishu. All rights reserved</p> -->
-    </div>
-  </section>
-  <!-- End Footer -->
-  <script src="./app.js"></script>
+        function updateTimeDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('time').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+    </script>
 </body>
-
 </html>
