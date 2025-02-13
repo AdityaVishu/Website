@@ -8,6 +8,7 @@
         body {
             font-family: 'Roboto', sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -24,6 +25,9 @@
         }
         .timer:hover {
             transform: scale(1.05);
+        }
+        .fullscreen {
+            text-align: right;
         }
         .time {
             font-size: 64px;
@@ -66,11 +70,14 @@
         }
         .set-timer button:hover {
             background-color: #69d5dd;
-        }
-    </style>
+        } 
+        </style>
 </head>
 <body>
     <div class="timer">
+        <div class="fullscreen">
+            <img src="fullscreen-svgrepo-com.svg" onclick="toggleFullscreen()" width="20" height="20">
+        </div>
         <div class="time" id="time">25:00</div>
         <div class="buttons">
             <button onclick="startTimer()">Start</button>
@@ -78,30 +85,30 @@
             <button onclick="resetTimer()">Reset</button>
         </div>
         <div class="set-timer">
-            <input type="number" id="minutes" placeholder="Minutes" min="0">
+            <input type="number" id="minutes" placeholder="Minutes">
             <button onclick="setTimer()">Set Timer</button>
         </div>
     </div>
-    <script>
-        window.addEventListener('load', () => {
-            const savedTimeLeft = localStorage.getItem('timeLeft');
-            const savedIsRunning = localStorage.getItem('isRunning');
-            if (savedTimeLeft !== null) {
-                timeLeft = parseInt(savedTimeLeft, 10);
-                updateTimeDisplay();
-            }
-            if (savedIsRunning === 'true') {
-                startTimer();
-            }
-        });
 
+    <script>
+
+        let timer, isRunning = false, timeLeft = 1500;
+        const timeElement = document.getElementById('time');
         window.addEventListener('beforeunload', () => {
             localStorage.setItem('timeLeft', timeLeft);
             localStorage.setItem('isRunning', isRunning);
         });
-    </script>
-    <script>
-        let timer, isRunning = false, timeLeft = 1500;
+
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('timeLeft')) {
+                timeLeft = parseInt(localStorage.getItem('timeLeft'), 10);
+                isRunning = localStorage.getItem('isRunning') === 'true';
+                updateTimeDisplay();
+                if (isRunning) {
+                    startTimer();
+                }
+            }
+        });
 
         function startTimer() {
             if (!isRunning) {
@@ -134,16 +141,29 @@
 
         function setTimer() {
             const minutes = document.getElementById('minutes').value;
-            if (minutes >= 0) {
+            if (minutes && !isNaN(minutes) && minutes >= 0) {
                 timeLeft = minutes * 60;
                 updateTimeDisplay();
+            } else {
+                alert('Please enter a valid number of minutes.');
             }
         }
 
         function updateTimeDisplay() {
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
-            document.getElementById('time').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            timeElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+        
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
         }
     </script>
 </body>
+</html>
