@@ -30,14 +30,14 @@
             text-align: right;
         }
         .time {
-            font-size: 64px;
+            font-size: 150px;
             margin-bottom: 20px;
             color: #333;
             font-weight: bold;
         }
         .buttons button, .set-timer button {
-            font-size: 18px;
-            padding: 12px 25px;
+            font-size: 14px;
+            padding: 8px 20px;
             margin: 5px;
             cursor: pointer;
             border: none;
@@ -70,8 +70,27 @@
         }
         .set-timer button:hover {
             background-color: #69d5dd;
-        } 
-        </style>
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (orientation: landscape) {
+            body {
+                flex-direction: row;
+            }
+            .timer {
+                width: 50%;
+            }
+        }
+
+        @media (orientation: portrait) {
+            body {
+                flex-direction: column;
+            }
+            .timer {
+                width: 80%;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="timer">
@@ -91,7 +110,6 @@
     </div>
 
     <script>
-
         let timer, isRunning = false, timeLeft = 1500;
         const timeElement = document.getElementById('time');
         window.addEventListener('beforeunload', () => {
