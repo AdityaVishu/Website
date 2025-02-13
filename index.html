@@ -41,31 +41,12 @@
             color: #0e0e0e;
             transition: background-color 0.3s;
         }
-        .buttons button:nth-child(1) {
+        .buttons button {
             background-color: transparent;
             border: #0e0e0e solid 2px;
             border-radius: 50px;
         }
-        .buttons button:nth-child(1):hover {
-            background-color: #69d5dd;
-            border: #69d5dd solid 2px;
-        }
-        .buttons button:nth-child(2) {
-            background-color: transparent;
-            border: #0e0e0e solid 2px;
-            border-radius: 50px;
-
-        }
-        .buttons button:nth-child(2):hover {
-            background-color: #69d5dd;
-            border: #69d5dd solid 2px;
-        }
-        .buttons button:nth-child(3) {
-            background-color: transparent;
-            border: #0e0e0e solid 2px;
-            border-radius: 50px;
-        }
-        .buttons button:nth-child(3):hover {
+        .buttons button:hover {
             background-color: #69d5dd;
             border: #69d5dd solid 2px;
         }
@@ -101,7 +82,24 @@
             <button onclick="setTimer()">Set Timer</button>
         </div>
     </div>
+    <script>
+        window.addEventListener('load', () => {
+            const savedTimeLeft = localStorage.getItem('timeLeft');
+            const savedIsRunning = localStorage.getItem('isRunning');
+            if (savedTimeLeft !== null) {
+                timeLeft = parseInt(savedTimeLeft, 10);
+                updateTimeDisplay();
+            }
+            if (savedIsRunning === 'true') {
+                startTimer();
+            }
+        });
 
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem('timeLeft', timeLeft);
+            localStorage.setItem('isRunning', isRunning);
+        });
+    </script>
     <script>
         let timer, isRunning = false, timeLeft = 1500;
 
@@ -149,4 +147,3 @@
         }
     </script>
 </body>
-</html>
